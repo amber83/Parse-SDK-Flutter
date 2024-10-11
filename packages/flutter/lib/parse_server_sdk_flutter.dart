@@ -123,7 +123,13 @@ class Parse extends sdk.Parse
 
   @override
   Stream<sdk.ParseConnectivityResult> get connectivityStream {
-    return Connectivity().onConnectivityChanged.map((ConnectivityResult event) {
+    return Connectivity()
+        .onConnectivityChanged
+        .map((List<ConnectivityResult> eventList) {
+      // Gérer le premier élément de la liste, par exemple
+      ConnectivityResult event =
+          eventList.isNotEmpty ? eventList.first : ConnectivityResult.none;
+
       switch (event) {
         case ConnectivityResult.wifi:
           return sdk.ParseConnectivityResult.wifi;
